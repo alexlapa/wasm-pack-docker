@@ -1,5 +1,7 @@
 FROM rust:1.33
 
+ENV HOME /home/user
+
 RUN apt-get update \
     && apt-get install -y `apt-cache depends firefox-esr | awk '/Depends:/{print$2}'` \
     && cargo install wasm-pack \
@@ -9,3 +11,5 @@ RUN apt-get update \
     && tar -xvjf firefox-66.0.tar.bz2 \
     && cp -R firefox /usr/lib/firefox \
     && ln -s /usr/lib/firefox/firefox /usr/bin/firefox
+
+RUN mkdir /home/user && chmod 777 /home/user
